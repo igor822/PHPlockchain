@@ -6,16 +6,38 @@ class Block
 
     private $previousHash;
 
-    private $transactions = [];
+    private $data = [];
 
     private $blockHash;
 
-    public function __construct($previousHash, $transactions)
+    private $timestamp;
+
+    public function __construct(string $previousHash, int $timestamp, array $data)
     {
         $this->previousHash = $previousHash;
-        $this->transactions = $transactions;
-        $contents = [$this->hashIt(serialize($transactions)), $previousHash];
-        $this->blockHash = $this->hashIt(serialize($contents));
+        $this->data = $data;
+        $this->timestamp = $timestamp;
+        $this->blockHash = $this->calculateHash();
+    }
+
+    public function isValid(Block $previousBlock): bool
+    {
+        if ($this->getPreviousHash() !== $previousBlock->getBlockHash()) {
+            return false;
+        }
+
+        if ($this->calculateHash() !== $this->getBlockHash()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function calculateHash(): string
+    {
+        $contents = [serialize($this->data), $this->timestamp, $this->previousHash];
+        $hash = $this->hashIt(serialize($contents));
+        return $hash;
     }
 
     public function getPreviousHash(): string
@@ -23,9 +45,9 @@ class Block
         return $this->previousHash;
     }
 
-    public function getTransactions(): array
+    public function getData(): array
     {
-        return $this->transactions;
+        return $this->data;
     }
 
     public function getBlockHash(): string

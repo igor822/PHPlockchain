@@ -1,5 +1,7 @@
 <?php declare(strict_types=1);
 
+namespace Blockchain;
+
 class Block
 {
     const HASH_TYPE = 'sha256';

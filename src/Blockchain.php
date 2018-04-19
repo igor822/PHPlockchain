@@ -1,5 +1,7 @@
 <?php declare(strict_types=1);
 
+namespace Blockchain;
+
 class Blockchain
 {
     private $chain;

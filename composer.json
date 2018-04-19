@@ -1,0 +1,22 @@
+{
+    "name": "igor822/phplockchain",
+    "description": "A simple implementation of blockchain in PHP",
+    "type": "library",
+    "autoload" : {
+        "psr4": {
+            "Blockchain\\": "src/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.1"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Igor Carvalho",
+            "email": "igor822@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}

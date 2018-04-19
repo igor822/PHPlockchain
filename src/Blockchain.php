@@ -17,11 +17,13 @@ class Blockchain
     public function newBlock(array $data): Block
     {
         $previousHash = $this->previousBlock ? $this->previousBlock->getHash() : 0;
-        return new Block(
+        $block = new Block(
             (string) $previousHash,
             (new \DateTime())->getTimestamp(),
             $data
         );
+        $this->chain[] = $block;
+        return $block;
     }
 
     public function addBlock(Block $block): void

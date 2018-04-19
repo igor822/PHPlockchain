@@ -72,6 +72,11 @@ class Block
         return $this->blockHash;
     }
 
+    public function getTimestamp(): int
+    {
+        return $this->timestamp;
+    }
+
     private function hashIt($content): string
     {
         return hash(self::HASH_TYPE, $content);

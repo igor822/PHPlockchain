@@ -22,11 +22,11 @@ class Block
 
     public function isValid(Block $previousBlock): bool
     {
-        if ($this->getPreviousHash() !== $previousBlock->getBlockHash()) {
+        if ($this->getPreviousHash() !== $previousBlock->getHash()) {
             return false;
         }
 
-        if ($this->calculateHash() !== $this->getBlockHash()) {
+        if ($this->calculateHash() !== $this->getHash()) {
             return false;
         }
 
@@ -40,6 +40,21 @@ class Block
         return $hash;
     }
 
+    // @TODO 
+    public function mineBlock(int $dificulty): void
+    {
+        return;
+        $target = '';
+        for ($i = 0; $i < $dificulty; $i++) {
+            $target .= '0';
+        }
+        $hash = $this->blockHash;
+        while (substr($hash, 0, $dificulty) != $target) {
+            $nounce++;
+            $hash = $this->calculateHash();
+        }
+    }
+
     public function getPreviousHash(): string
     {
         return $this->previousHash;
@@ -50,7 +65,7 @@ class Block
         return $this->data;
     }
 
-    public function getBlockHash(): string
+    public function getHash(): string
     {
         return $this->blockHash;
     }

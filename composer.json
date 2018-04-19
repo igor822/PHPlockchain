@@ -3,7 +3,7 @@
     "description": "A simple implementation of blockchain in PHP",
     "type": "library",
     "autoload" : {
-        "psr4": {
+        "psr-4": {
             "Blockchain\\": "src/"
         }
     },

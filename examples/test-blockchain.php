@@ -1,13 +1,15 @@
 <?php
 
-require 'Blockchain.php';
-require 'Block.php';
+use Blockchain\Blockchain;
+use Blockchain\Block;
+
+require __DIR__ . '/../vendor/autoload.php';
 
 $blockchain = new Blockchain();
 
 $blockTransaction = ['a sends 11 bitcoins to b', 'b sends 44 bitcoins to c'];
 $block1 = new Block(
-    $blockchain->getLatestBlock()->getHash(),
+    $blockchain->getLastBlock()->getHash(),
     (new \DateTime())->getTimestamp(),
     $blockTransaction
 );

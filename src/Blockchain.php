@@ -27,7 +27,7 @@ class Blockchain
     public function addBlock(Block $block): void
     {
         if ($this->isValidNewBlock($block, $this->getLastBlock())) {
-            $this->previousBlock = $this->getLatestBlock();
+            $this->previousBlock = $this->getLastBlock();
             $this->chain[] = $block;
         }
     }

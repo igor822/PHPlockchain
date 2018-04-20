@@ -18,6 +18,13 @@ class Block
 
     private $nounce;
 
+    /**
+     * @param string $previousHash
+     * @param int $timestamp
+     * @param BlockContent $data
+     * @param string $bits
+     * @param int $nounce
+     */
     public function __construct(
         string $previousHash,
         int $timestamp,
@@ -33,6 +40,10 @@ class Block
         $this->blockHash = $this->calculateHash();
     }
 
+    /**
+     * @param Block $previousBlock
+     * @return bool
+     */
     public function isValid(Block $previousBlock): bool
     {
         if ($this->getPreviousHash() !== $previousBlock->getHash()) {
@@ -46,6 +57,9 @@ class Block
         return true;
     }
 
+    /**
+     * @return string
+     */
     public function calculateHash(): string
     {
         $contents = [
@@ -59,7 +73,10 @@ class Block
         return $hash;
     }
 
-    public function mineBlock(int $dificulty): self
+    /**
+     * @return self
+     */
+    public function mineBlock(): self
     {
         $target = $this->getTargetFromBits();
         $hash = $this->blockHash;
@@ -70,6 +87,9 @@ class Block
         return $this;
     }
 
+    /**
+     * @return float
+     */
     public function getTargetFromBits(): float
     {
         $exponent = hexdec(substr($this->bits, 0, 2));
@@ -78,37 +98,58 @@ class Block
         return $coefficient * 2 ** (8 * ($exponent - 3));
     }
 
+    /**
+     * @return string
+     */
     public function getPreviousHash(): string
     {
         return $this->previousHash;
     }
 
+    /**
+     * @return BlockContent
+     */
     public function getData(): BlockContent
     {
         return $this->data;
     }
 
+    /**
+     * @return string 
+     */
     public function getHash(): string
     {
         return $this->blockHash;
     }
 
+    /**
+     * @return int
+     */
     public function getTimestamp(): int
     {
         return $this->timestamp;
     }
 
+    /**
+     * @return string
+     */
     public function getBits(): string
     {
         return $this->bits;
     }
 
+    /**
+     * @return int
+     */
     public function getNounce(): int
     {
         return $this->nounce;
     }
 
-    public function __toString()
+    /**
+     * @return string
+     */
+    public function __toString(): string
     {
         return json_encode([
             'hash' => $this->blockHash,
@@ -117,6 +158,9 @@ class Block
         ]);
     }
 
+    /**
+     * @return string
+     */
     private function hashIt($content): string
     {
         return hash(self::HASH_TYPE, $content);

@@ -15,4 +15,9 @@ final class BlockContent
     {
         return $data;
     }
+
+    public function __toString()
+    {
+        return json_encode($this->data);
+    }
 }

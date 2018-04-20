@@ -108,6 +108,15 @@ class Block
         return $this->nounce;
     }
 
+    public function __toString()
+    {
+        return json_encode([
+            'hash' => $this->blockHash,
+            'data' => $this->getData(),
+            'previousHash' => $this->previousHash,
+        ]);
+    }
+
     private function hashIt($content): string
     {
         return hash(self::HASH_TYPE, $content);

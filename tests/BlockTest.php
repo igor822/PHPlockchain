@@ -30,9 +30,17 @@ class BlockTest extends TestCase
         $previousHash = '0';
         $timestamp = 1234;
         $data = [];
-        $block = new Block($previousHash, $timestamp, $data);
+        $bits = '1b0f3f3f5';
+        $nounce = 1;
+        $block = new Block($previousHash, $timestamp, $data, $bits, $nounce);
 
-        $contents = [serialize($data), $timestamp, $previousHash];
+        $contents = [
+            serialize($data),
+            $timestamp,
+            $previousHash,
+            $bits,
+            $nounce
+        ];
         $hash = hash(Block::HASH_TYPE, serialize($contents));
 
         $this->assertEquals($block->calculateHash(), $hash);
@@ -49,7 +57,9 @@ class BlockTest extends TestCase
         $previousHash = '0';
         $timestamp = 1234;
         $data = [];
-        $block = new Block($previousHash, $timestamp, $data);
+        $bits = '1b0f3f3f5';
+        $nounce = 1;
+        $block = new Block($previousHash, $timestamp, $data, $bits, $nounce);
 
         $this->assertTrue($block->isValid($mock));
     }

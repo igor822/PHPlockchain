@@ -35,8 +35,10 @@ class BlockchainTest extends TestCase
 
         $previousHash = $block->getPreviousHash();
         $timestamp = $block->getTimestamp();
+        $nounce = $block->getNounce();
+        $bits = $block->getBits();
 
-        $contents = [serialize($data), $timestamp, $previousHash];
+        $contents = [serialize($data), $timestamp, $previousHash, $bits, $nounce];
         $hash = hash(Block::HASH_TYPE, serialize($contents));
 
         $this->assertEquals($hash, $block->getHash());

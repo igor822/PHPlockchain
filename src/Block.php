@@ -14,15 +14,22 @@ class Block
 
     private $timestamp;
 
-    private $bits = '1b00ffff';
+    private $bits;
 
-    private $nounce = 100;
+    private $nounce;
 
-    public function __construct(string $previousHash, int $timestamp, array $data)
-    {
+    public function __construct(
+        string $previousHash,
+        int $timestamp,
+        array $data,
+        string $bits = '1b00ffff',
+        int $nounce = 1
+    ) {
         $this->previousHash = $previousHash;
         $this->data = $data;
         $this->timestamp = $timestamp;
+        $this->bits = $bits;
+        $this->nounce = $nounce;
         $this->blockHash = $this->calculateHash();
     }
 
@@ -41,7 +48,13 @@ class Block
 
     public function calculateHash(): string
     {
-        $contents = [serialize($this->data), $this->timestamp, $this->previousHash, $this->bits, $this->nounce];
+        $contents = [
+            serialize($this->data),
+            $this->timestamp,
+            $this->previousHash,
+            $this->bits,
+            $this->nounce
+        ];
         $hash = $this->hashIt(serialize($contents));
         return $hash;
     }
@@ -75,6 +88,16 @@ class Block
     public function getTimestamp(): int
     {
         return $this->timestamp;
+    }
+
+    public function getBits(): string
+    {
+        return $this->bits;
+    }
+
+    public function getNounce(): int
+    {
+        return $this->nounce;
     }
 
     public function getTargetFromBits(): float

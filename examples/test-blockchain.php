@@ -21,4 +21,5 @@ $block2 = new Block($block1->getHash(), (new \DateTime())->getTimestamp(), $bloc
 
 $blockchain->addBlock($block2);
 
-var_dump($blockchain);
+//var_dump($blockchain);
+var_dump($block2->mineBlock(1));

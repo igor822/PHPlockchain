@@ -1,6 +1,8 @@
 PHPlockChain
 ===============================
 
+Blockchain inspired in [PHPlata coin](https://github.com/gabrielrcouto/phplata)
+
 Example: 
 
 * https://github.com/rhondle/BlockChain

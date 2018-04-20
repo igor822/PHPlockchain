@@ -14,6 +14,10 @@ class Block
 
     private $timestamp;
 
+    private $bits = '1b00ffff';
+
+    private $nounce = 100;
+
     public function __construct(string $previousHash, int $timestamp, array $data)
     {
         $this->previousHash = $previousHash;
@@ -37,24 +41,20 @@ class Block
 
     public function calculateHash(): string
     {
-        $contents = [serialize($this->data), $this->timestamp, $this->previousHash];
+        $contents = [serialize($this->data), $this->timestamp, $this->previousHash, $this->bits, $this->nounce];
         $hash = $this->hashIt(serialize($contents));
         return $hash;
     }
 
-    // @TODO 
-    public function mineBlock(int $dificulty): void
+    public function mineBlock(int $dificulty): self
     {
-        return;
-        $target = '';
-        for ($i = 0; $i < $dificulty; $i++) {
-            $target .= '0';
-        }
+        $target = $this->getTargetFromBits();
         $hash = $this->blockHash;
-        while (substr($hash, 0, $dificulty) != $target) {
-            $nounce++;
+        while (base_convert($hash, 16, 10) > $target) {
+            $this->nounce++;
             $hash = $this->calculateHash();
         }
+        return $this;
     }
 
     public function getPreviousHash(): string
@@ -75,6 +75,14 @@ class Block
     public function getTimestamp(): int
     {
         return $this->timestamp;
+    }
+
+    public function getTargetFromBits(): float
+    {
+        $exponent = hexdec(substr($this->bits, 0, 2));
+        $coefficient = hexdec(substr($this->bits, 2));
+
+        return $coefficient * 2 ** (8 * ($exponent - 3));
     }
 
     private function hashIt($content): string

@@ -10,11 +10,11 @@ class Blockchain
 
     public function __construct()
     {
-        $this->previousBlock = $this->newBlock(['genesis block']);
+        $this->previousBlock = $this->newBlock(new BlockContent(['genesis block']));
         $this->chain[] = $this->previousBlock;
     }
 
-    public function newBlock(array $data): Block
+    public function newBlock(BlockContent $data): Block
     {
         $previousHash = $this->previousBlock ? $this->previousBlock->getHash() : 0;
         $block = new Block(

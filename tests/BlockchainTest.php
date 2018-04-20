@@ -4,6 +4,7 @@ namespace Tests;
 
 use PHPUnit\Framework\TestCase;
 use Blockchain\Blockchain;
+use Blockchain\BlockContent;
 use Blockchain\Block;
 
 class BlockchainTest extends TestCase
@@ -17,7 +18,7 @@ class BlockchainTest extends TestCase
 
     public function testCreationOfNewBlock()
     {
-        $data = [];
+        $data = new BlockContent();
 
         $blockchain = new Blockchain();
         $block = $blockchain->newBlock($data);
@@ -28,7 +29,7 @@ class BlockchainTest extends TestCase
 
     public function testGenerateHashFromGeneratedBlock()
     {
-        $data = [];
+        $data = new BlockContent();
 
         $blockchain = new Blockchain();
         $block = $blockchain->newBlock($data);
@@ -46,7 +47,7 @@ class BlockchainTest extends TestCase
 
     public function testSimilarityBetweenSameBlock()
     {
-        $data = [];
+        $data = new BlockContent();
 
         $blockchain = new Blockchain();
         $block = $blockchain->newBlock($data);

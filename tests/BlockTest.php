@@ -4,12 +4,13 @@ namespace Tests;
 
 use PHPUnit\Framework\TestCase;
 use Blockchain\Block;
+use Blockchain\BlockContent;
 
 class BlockTest extends TestCase
 {
     public function testInitial()
     {
-        $block = new Block('0', 1234, []);
+        $block = new Block('0', 1234, new BlockContent());
 
         $this->assertInstanceOf(Block::class, $block);
     }
@@ -18,7 +19,7 @@ class BlockTest extends TestCase
     {
         $previousHash = '0';
         $timestamp = 1234;
-        $data = [];
+        $data = new BlockContent([]);
         $block = new Block($previousHash, $timestamp, $data);
 
         $this->assertEquals($previousHash, $block->getPreviousHash());
@@ -29,7 +30,7 @@ class BlockTest extends TestCase
     {
         $previousHash = '0';
         $timestamp = 1234;
-        $data = [];
+        $data = new BlockContent([]);
         $bits = '1b0f3f3f5';
         $nounce = 1;
         $block = new Block($previousHash, $timestamp, $data, $bits, $nounce);
@@ -56,7 +57,7 @@ class BlockTest extends TestCase
 
         $previousHash = '0';
         $timestamp = 1234;
-        $data = [];
+        $data = new BlockContent([]);
         $bits = '1b0f3f3f5';
         $nounce = 1;
         $block = new Block($previousHash, $timestamp, $data, $bits, $nounce);

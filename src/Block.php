@@ -21,7 +21,7 @@ class Block
     public function __construct(
         string $previousHash,
         int $timestamp,
-        array $data,
+        BlockContent $data,
         string $bits = '1b00ffff',
         int $nounce = 1
     ) {
@@ -70,12 +70,20 @@ class Block
         return $this;
     }
 
+    public function getTargetFromBits(): float
+    {
+        $exponent = hexdec(substr($this->bits, 0, 2));
+        $coefficient = hexdec(substr($this->bits, 2));
+
+        return $coefficient * 2 ** (8 * ($exponent - 3));
+    }
+
     public function getPreviousHash(): string
     {
         return $this->previousHash;
     }
 
-    public function getData(): array
+    public function getData(): BlockContent
     {
         return $this->data;
     }
@@ -98,14 +106,6 @@ class Block
     public function getNounce(): int
     {
         return $this->nounce;
-    }
-
-    public function getTargetFromBits(): float
-    {
-        $exponent = hexdec(substr($this->bits, 0, 2));
-        $coefficient = hexdec(substr($this->bits, 2));
-
-        return $coefficient * 2 ** (8 * ($exponent - 3));
     }
 
     private function hashIt($content): string

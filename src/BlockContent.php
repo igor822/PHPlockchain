@@ -8,12 +8,12 @@ final class BlockContent
 
     public function __construct($data = null)
     {
-        return $this->data;
+        $this->data = $data;
     }
 
     public function getData()
     {
-        return $data;
+        return $this->data;
     }
 
     public function __toString()
